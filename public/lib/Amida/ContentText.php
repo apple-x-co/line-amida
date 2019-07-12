@@ -6,17 +6,17 @@ namespace Amida;
 
 class ContentText implements ContentInterface
 {
-    /** @var string */
-    private $text;
+    /** @var array */
+    private $data;
 
     /**
      * ContentText constructor.
      *
-     * @param string $text
+     * @param array $data
      */
-    public function __construct($text)
+    public function __construct($data)
     {
-        $this->text = $text;
+        $this->data = $data;
     }
 
     /**
@@ -24,6 +24,6 @@ class ContentText implements ContentInterface
      */
     public function getText()
     {
-        return $this->text;
+        return $this->data['text'];
     }
 }

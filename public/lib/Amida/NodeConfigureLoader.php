@@ -7,13 +7,12 @@ namespace Amida;
 class NodeConfigureLoader
 {
     /**
+     * @param array $data
+     *
      * @return NodeInterface
      */
     public static function load($data)
     {
-        $node = new Node();
-        $node->setId($data['id']);
-
-        return $node;
+        return new Node($data);
     }
 }

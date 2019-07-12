@@ -6,8 +6,8 @@ namespace Amida;
 
 class Node implements NodeInterface
 {
-    /** @var string */
-    private $id;
+    /** @var array */
+    private $data;
 
     /** @var NodeInterface[] */
     private $branches;
@@ -16,19 +16,21 @@ class Node implements NodeInterface
     private $content;
 
     /**
+     * Node constructor.
+     *
+     * @param $data
+     */
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
      * @return string
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    /**
-     * @param string $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
+        return $this->data['id'];
     }
 
     /**

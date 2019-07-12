@@ -40,6 +40,16 @@ class ConfigureLoader
 
                 /** @var ContentInterface $content */
                 $content = null;
+                $array_content = $array_node['content'];
+                if (isset($array_content['class'])) {
+                    $class = $array_content['class'];
+                    if ( ! class_exists($class)) {
+                        continue;
+                    }
+                    $content = new $class($array_content);
+                } else {
+                    $content = ContentConfigureLoader::load($array_content);
+                }
                 $node->setContent($content);
 
                 $nodes[] = $node;
