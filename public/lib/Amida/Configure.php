@@ -5,15 +5,15 @@ namespace Amida;
 
 class Configure
 {
-    /** @var NodeInterface[] */
+    /** @var Collection|NodeInterface[] */
     private $nodes;
 
     /**
      * Configure constructor.
      *
-     * @param NodeInterface[] $nodes
+     * @param Collection|NodeInterface[] $nodes
      */
-    public function __construct(array $nodes)
+    public function __construct($nodes)
     {
         $this->nodes = $nodes;
     }

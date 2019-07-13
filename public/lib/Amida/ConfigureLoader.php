@@ -48,12 +48,11 @@ class ConfigureLoader
                             $trigger = TriggerConfigureLoader::load($array_trigger);
                             $triggers[] = $trigger;
                         }
-
-                        $branch->setTriggers($triggers);
+                        $branch->setTriggers(new Collection($triggers));
 
                         $branches[] = $branch;
                     }
-                    $node->setBranches($branches);
+                    $node->setBranches(new Collection($branches));
                 }
 
                 /** @var ContentInterface $content */
@@ -73,7 +72,7 @@ class ConfigureLoader
                 $nodes[] = $node;
             }
 
-            $configure = new Configure($nodes);
+            $configure = new Configure(new Collection($nodes));
         }
 
         return $configure;

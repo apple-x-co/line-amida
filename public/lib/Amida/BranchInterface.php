@@ -7,7 +7,12 @@ namespace Amida;
 interface BranchInterface
 {
     /**
-     * @param ContentInterface[] $triggers
+     * @return Collection|TriggerInterface[]
+     */
+    public function getTriggers();
+
+    /**
+     * @param Collection|TriggerInterface[] $triggers
      */
     public function setTriggers($triggers);
 }

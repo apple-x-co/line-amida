@@ -12,7 +12,7 @@ class Node implements NodeInterface
     /** @var ContentInterface */
     private $content;
 
-    /** @var NodeInterface[] */
+    /** @var Collection|BranchInterface[] */
     private $branches;
 
     /**
@@ -44,15 +44,15 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return Branch[]
+     * @return Collection|BranchInterface[]
      */
     public function getBranches()
     {
-        // TODO: Implement getNextNodes() method.
+        return $this->branches;
     }
 
     /**
-     * @param Branch $branches
+     * @param Collection|BranchInterface[] $branches
      */
     public function setBranches($branches)
     {

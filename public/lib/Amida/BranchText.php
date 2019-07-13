@@ -9,7 +9,7 @@ class BranchText implements BranchInterface
     /** @var array */
     private $data;
 
-    /** @var ContentInterface[] */
+    /** @var Collection */
     private $triggers;
 
     /**
@@ -23,7 +23,15 @@ class BranchText implements BranchInterface
     }
 
     /**
-     * @param ContentInterface[] $triggers
+     * @return Collection|TriggerInterface[]
+     */
+    public function getTriggers()
+    {
+        return $this->triggers;
+    }
+
+    /**
+     * @param Collection|TriggerInterface[] $triggers
      */
     public function setTriggers($triggers)
     {
