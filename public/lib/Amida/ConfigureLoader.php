@@ -45,7 +45,8 @@ class ConfigureLoader
                         $triggers  = [];
                         $array_triggers = $array_branch['triggers'];
                         foreach ($array_triggers as $array_trigger) {
-                            // todo:
+                            $trigger = TriggerConfigureLoader::load($array_trigger);
+                            $triggers[] = $trigger;
                         }
 
                         $branch->setTriggers($triggers);

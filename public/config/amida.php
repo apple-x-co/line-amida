@@ -17,7 +17,7 @@ return [
                 'text'     => 'branch b1',
                 'triggers' => [
                     [
-                        //'class' => '\Amida\ContentText',
+                        //'class' => '\Amida\TriggerText',
                         'type' => 'text',
                         'text' => 'b1'
                     ]
