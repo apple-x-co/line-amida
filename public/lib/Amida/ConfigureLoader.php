@@ -45,15 +45,15 @@ class ConfigureLoader
                         $triggers  = [];
                         $array_triggers = $array_branch['triggers'];
                         foreach ($array_triggers as $array_trigger) {
-
+                            // todo:
                         }
 
                         $branch->setTriggers($triggers);
 
                         $branches[] = $branch;
                     }
-                    $node->setBranches($branches);}
-
+                    $node->setBranches($branches);
+                }
 
                 /** @var ContentInterface $content */
                 $content = null;
