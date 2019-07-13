@@ -16,12 +16,12 @@ interface NodeInterface
     public function hasBranch();
 
     /**
-     * @return Branch[]
+     * @return BranchInterface[]
      */
     public function getBranches();
 
     /**
-     * @param  Branch[] $branches
+     * @param  BranchInterface[] $branches
      */
     public function setBranches($branches);
 

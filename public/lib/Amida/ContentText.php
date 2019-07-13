@@ -26,4 +26,12 @@ class ContentText implements ContentInterface
     {
         return $this->data['text'];
     }
+
+    public function __debugInfo()
+    {
+        return [
+            'type' => $this->data['type'],
+            'text' => $this->data['text']
+        ];
+    }
 }

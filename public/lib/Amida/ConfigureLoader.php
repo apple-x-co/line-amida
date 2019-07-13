@@ -34,9 +34,26 @@ class ConfigureLoader
                     $node = NodeConfigureLoader::load($array_node);
                 }
 
-                /** @var Branch[] $branches */
-                $branches = [];
-                $node->setBranches($branches);
+                if (isset($array_node['branches'])) {
+                    /** @var BranchInterface[] $branches */
+                    $branches = [];
+                    $array_branches = $array_node['branches'];
+                    foreach ($array_branches as $array_branch) {
+                        /** @var BranchInterface $branch */
+                        $branch = BranchConfigureLoader::load($array_branch);
+
+                        $triggers  = [];
+                        $array_triggers = $array_branch['triggers'];
+                        foreach ($array_triggers as $array_trigger) {
+
+                        }
+
+                        $branch->setTriggers($triggers);
+
+                        $branches[] = $branch;
+                    }
+                    $node->setBranches($branches);}
+
 
                 /** @var ContentInterface $content */
                 $content = null;

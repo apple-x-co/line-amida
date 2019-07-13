@@ -9,11 +9,11 @@ class Node implements NodeInterface
     /** @var array */
     private $data;
 
-    /** @var NodeInterface[] */
-    private $branches;
-
     /** @var ContentInterface */
     private $content;
+
+    /** @var NodeInterface[] */
+    private $branches;
 
     /**
      * Node constructor.
@@ -23,6 +23,8 @@ class Node implements NodeInterface
     public function __construct($data)
     {
         $this->data = $data;
+        $this->content = null;
+        $this->branches = [];
     }
 
     /**
@@ -71,5 +73,14 @@ class Node implements NodeInterface
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    public function __debugInfo()
+    {
+        return [
+            'id'       => $this->data['id'],
+            'content'  => $this->content,
+            'branches' => $this->branches
+        ];
     }
 }
