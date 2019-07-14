@@ -37,7 +37,9 @@ foreach ($events as $event) {
         $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
 
         if ($in_progress) {
-            // todo:
+            // todo: 最後のnodeを取り出す
+            // todo: LINEテキストを元に、nodeのブランチに対応するものを探す
+            // todo: 新しいNodeブランチを元に返事をする
         }
 
         if ($line_text === 'amida') {
@@ -48,30 +50,10 @@ foreach ($events as $event) {
             /** @var \Amida\NodeInterface $rootNode */
             $rootNode = $configure->getNodes()->firstMatch(['root' => 1]);
 
-            $content = $rootNode->getContent();
-            if ($content instanceof \Amida\ContentText) {
-
-                $quickReply = null;
-                if ($rootNode->hasBranch()) {
-                    $branches = $rootNode->getBranches();
-                    $quickReplyButtons = [];
-                    foreach ($branches as $branch) {
-                        if ($branch instanceof \Amida\BranchText) {
-                            $quickReplyButtons[] = new \LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder(
-                                new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                                    $branch->getLabel(),
-                                    $branch->getText()
-                                )
-                            );
-                        }
-                    }
-                    if (count($quickReplyButtons) > 0) {
-                        $quickReply = new \LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quickReplyButtons);
-                    }
-                }
-
+            $messageBuilder = getLINEMessageBuilderByAmidaNode($rootNode);
+            if ($messageBuilder !== null) {
                 $response = $bot->replyMessage(
-                    $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($content->getText(), $quickReply)
+                    $event->getReplyToken(), $messageBuilder
                 );
                 if ( ! $response->isSucceeded()) {
                     error_log($response->getRawBody());
@@ -82,4 +64,38 @@ foreach ($events as $event) {
             $persistence->save($bag);
         }
     }
+}
+
+/**
+ * @param \Amida\NodeInterface $node
+ *
+ * @return LINE\LINEBot\MessageBuilder|null
+ */
+function getLINEMessageBuilderByAmidaNode($node)
+{
+    $content = $node->getContent();
+    if ($content instanceof \Amida\ContentText) {
+        $quickReply = null;
+        if ($node->hasBranch()) {
+            $branches = $node->getBranches();
+            $quickReplyButtons = [];
+            foreach ($branches as $branch) {
+                if ($branch instanceof \Amida\BranchText) {
+                    $quickReplyButtons[] = new \LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder(
+                        new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                            $branch->getLabel(),
+                            $branch->getText()
+                        )
+                    );
+                }
+            }
+            if (count($quickReplyButtons) > 0) {
+                $quickReply = new \LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quickReplyButtons);
+            }
+        }
+
+        return new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($content->getText(), $quickReply);
+    }
+
+    return null;
 }
