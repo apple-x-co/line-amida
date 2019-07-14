@@ -41,7 +41,7 @@ foreach ($events as $event) {
                                 $quickReplyButtons[] = new \LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder(
                                     new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                                         $branch->getLabel(),
-                                        $branch->getLabel()
+                                        $branch->getText()
                                     )
                                 );
                             }

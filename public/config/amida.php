@@ -15,8 +15,8 @@ return [
                 //'class' => '\Amida\Branch',
                 'to'       => 'node-b1',
                 'type'     => 'text',
-                'label'    => 'b1',
-                'text'     => 'branch b1',
+                'label'    => 'branch b1',
+                'text'     => 'b1',
                 'triggers' => [
                     [
                         //'class' => '\Amida\TriggerText',
@@ -28,8 +28,8 @@ return [
             [
                 'to'       => 'node-b2',
                 'type'     => 'text',
-                'label'    => 'b2',
-                'text'     => 'branch b2',
+                'label'    => 'branch b2',
+                'text'     => 'b2',
                 'triggers' => [
                     [
                         //'class' => '\Amida\ContentText',
@@ -50,8 +50,8 @@ return [
             [
                 'to'       => 'node-c1',
                 'type'     => 'text',
-                'label'    => 'c1',
-                'text'     => 'branch c1',
+                'label'    => 'branch c1',
+                'text'     => 'c1',
                 'triggers' => [
                     [
                         'type' => 'text',
@@ -62,8 +62,8 @@ return [
             [
                 'to'       => 'node-c2',
                 'type'     => 'text',
-                'label'    => 'c2',
-                'text'     => 'branch c2',
+                'label'    => 'branch c2',
+                'text'     => 'c2',
                 'triggers' => [
                     [
                         'type' => 'text',
@@ -83,8 +83,8 @@ return [
             [
                 'to'       => 'node-c3',
                 'type'     => 'text',
-                'label'    => 'c3',
-                'text'     => 'branch c3',
+                'label'    => 'branch c3',
+                'text'     => 'c3',
                 'triggers' => [
                     [
                         'type' => 'text',
@@ -95,8 +95,8 @@ return [
             [
                 'to'       => 'node-c4',
                 'type'     => 'text',
-                'label'    => 'c4',
-                'text'     => 'branch c4',
+                'label'    => 'branch c4',
+                'text'     => 'c4',
                 'triggers' => [
                     [
                         'type' => 'text',
