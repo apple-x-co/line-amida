@@ -15,6 +15,14 @@ class Bag implements \Serializable
     }
 
     /**
+     * @return bool
+     */
+    public function hasNodes()
+    {
+        return ! $this->nodes->isEmpty();
+    }
+
+    /**
      * @param NodeInterface $node
      */
     public function addNode($node)
@@ -28,6 +36,14 @@ class Bag implements \Serializable
     public function getNodes()
     {
         return $this->nodes;
+    }
+
+    /**
+     * @return void
+     */
+    public function clearNodes()
+    {
+        $this->nodes = new Collection();
     }
 
     /**

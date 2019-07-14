@@ -38,46 +38,48 @@ foreach ($events as $event) {
 
         if ($in_progress) {
             // todo:
-        } else {
-            if ($line_text === 'amida') {
-                /** @var \Amida\NodeInterface $rootNode */
-                $rootNode = $configure->getNodes()->firstMatch(['root' => 1]);
+        }
 
-                $content = $rootNode->getContent();
-                if ($content instanceof \Amida\ContentText) {
+        if ($line_text === 'amida') {
+            if ($bag->hasNodes()) {
+                $bag->clearNodes();
+            }
 
-                    $quickReply = null;
-                    if ($rootNode->hasBranch()) {
-                        $branches = $rootNode->getBranches();
-                        $quickReplyButtons = [];
-                        foreach ($branches as $branch) {
-                            if ($branch instanceof \Amida\BranchText) {
-                                $quickReplyButtons[] = new \LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder(
-                                    new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                                        $branch->getLabel(),
-                                        $branch->getText()
-                                    )
-                                );
-                            }
-                        }
-                        if (count($quickReplyButtons) > 0) {
-                            $quickReply = new \LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quickReplyButtons);
+            /** @var \Amida\NodeInterface $rootNode */
+            $rootNode = $configure->getNodes()->firstMatch(['root' => 1]);
+
+            $content = $rootNode->getContent();
+            if ($content instanceof \Amida\ContentText) {
+
+                $quickReply = null;
+                if ($rootNode->hasBranch()) {
+                    $branches = $rootNode->getBranches();
+                    $quickReplyButtons = [];
+                    foreach ($branches as $branch) {
+                        if ($branch instanceof \Amida\BranchText) {
+                            $quickReplyButtons[] = new \LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder(
+                                new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                                    $branch->getLabel(),
+                                    $branch->getText()
+                                )
+                            );
                         }
                     }
-
-                    $response = $bot->replyMessage(
-                        $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($content->getText(), $quickReply)
-                    );
-                    if ( ! $response->isSucceeded()) {
-                        error_log($response->getRawBody());
+                    if (count($quickReplyButtons) > 0) {
+                        $quickReply = new \LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quickReplyButtons);
                     }
                 }
 
-                $bag->addNode($rootNode);
+                $response = $bot->replyMessage(
+                    $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($content->getText(), $quickReply)
+                );
+                if ( ! $response->isSucceeded()) {
+                    error_log($response->getRawBody());
+                }
             }
 
+            $bag->addNode($rootNode);
+            $persistence->save($bag);
         }
-
-        $persistence->save($bag);
     }
 }
