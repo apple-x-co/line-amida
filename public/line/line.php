@@ -59,8 +59,6 @@ foreach ($events as $event) {
             }
 
             if ($newNode !== null) {
-                error_log(var_export($newNode->getId(), true));
-
                 $messageBuilder = getLINEMessageBuilderByAmidaNode($newNode);
                 if ($messageBuilder !== null) {
                     $response = $bot->replyMessage(
