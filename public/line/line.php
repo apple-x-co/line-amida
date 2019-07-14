@@ -28,8 +28,9 @@ foreach ($events as $event) {
 
         $persistence = new \Amida\Persistence(__DIR__ . '/../../data/cache/' . $line_id);
         if ($persistence->exists()) {
+            /** @var \Amida\Bag $bag */
             $bag = $persistence->fetch(\Amida\Bag::class);
-            if ($bag !== null) {
+            if ($bag !== null && $bag->hasNodes()) {
                 $in_progress = true;
             }
         }
@@ -37,9 +38,13 @@ foreach ($events as $event) {
         $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
 
         if ($in_progress) {
-            // todo: 最後のnodeを取り出す
             // todo: LINEテキストを元に、nodeのブランチに対応するものを探す
             // todo: 新しいNodeブランチを元に返事をする
+
+            /** @var \Amida\NodeInterface $node */
+            $node = $bag->getNodes()->first();
+
+
         }
 
         if ($line_text === 'amida') {

@@ -4,6 +4,7 @@
 namespace Amida;
 
 
+use LimitIterator;
 use Traversable;
 
 class Collection implements \IteratorAggregate
@@ -44,6 +45,19 @@ class Collection implements \IteratorAggregate
     public function append($data)
     {
         $this->array[] = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function first()
+    {
+        $iterator = new LimitIterator(new \ArrayIterator($this->array), 0, 1);
+        foreach ($iterator as $result) {
+            return $result;
+        }
+
+        return null;
     }
 
     /**
