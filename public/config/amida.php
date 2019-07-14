@@ -15,6 +15,7 @@ return [
                 //'class' => '\Amida\Branch',
                 'to'       => 'node-b1',
                 'type'     => 'text',
+                'label'    => 'b1',
                 'text'     => 'branch b1',
                 'triggers' => [
                     [
@@ -27,6 +28,7 @@ return [
             [
                 'to'       => 'node-b2',
                 'type'     => 'text',
+                'label'    => 'b2',
                 'text'     => 'branch b2',
                 'triggers' => [
                     [
@@ -48,6 +50,7 @@ return [
             [
                 'to'       => 'node-c1',
                 'type'     => 'text',
+                'label'    => 'c1',
                 'text'     => 'branch c1',
                 'triggers' => [
                     [
@@ -59,6 +62,7 @@ return [
             [
                 'to'       => 'node-c2',
                 'type'     => 'text',
+                'label'    => 'c2',
                 'text'     => 'branch c2',
                 'triggers' => [
                     [
@@ -79,6 +83,7 @@ return [
             [
                 'to'       => 'node-c3',
                 'type'     => 'text',
+                'label'    => 'c3',
                 'text'     => 'branch c3',
                 'triggers' => [
                     [
@@ -90,6 +95,7 @@ return [
             [
                 'to'       => 'node-c4',
                 'type'     => 'text',
+                'label'    => 'c4',
                 'text'     => 'branch c4',
                 'triggers' => [
                     [

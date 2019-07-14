@@ -31,9 +31,32 @@ foreach ($events as $event) {
 
                 $content = $rootNode->getContent();
                 if ($content instanceof \Amida\ContentText) {
+
+                    $quickReply = null;
+                    if ($rootNode->hasBranch()) {
+                        $branches = $rootNode->getBranches();
+                        $quickReplyButtons = [];
+                        foreach ($branches as $branch) {
+                            if ($branch instanceof \Amida\BranchText) {
+                                $quickReplyButtons[] = new \LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder(
+                                    new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                                        $branch->getLabel(),
+                                        $branch->getLabel()
+                                    )
+                                );
+                            }
+                        }
+                        if (count($quickReplyButtons) > 0) {
+                            $quickReply = new \LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quickReplyButtons);
+                        }
+                    }
+
                     $response = $bot->replyMessage(
-                        $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($content->getText())
+                        $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($content->getText(), $quickReply)
                     );
+                    if ( ! $response->isSucceeded()) {
+                        error_log($response->getRawBody());
+                    }
                 }
             }
 

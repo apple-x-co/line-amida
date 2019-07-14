@@ -4,9 +4,11 @@
 namespace Amida;
 
 
-class Collection
+use Traversable;
+
+class Collection implements \IteratorAggregate
 {
-    public $array = [];
+    private $array = [];
 
     /**
      * Collection constructor.
@@ -87,5 +89,17 @@ class Collection
     public function toArray()
     {
         return $this->array;
+    }
+
+    /**
+     * Retrieve an external iterator
+     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->array);
     }
 }
