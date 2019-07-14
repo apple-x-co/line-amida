@@ -48,11 +48,24 @@ class Collection implements \IteratorAggregate
     }
 
     /**
-     * @return mixed
+     * @return mixed|null
      */
     public function first()
     {
         $iterator = new LimitIterator(new \ArrayIterator($this->array), 0, 1);
+        foreach ($iterator as $result) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function last()
+    {
+        $iterator = new LimitIterator(new \ArrayIterator($this->array), count($this->array) - 1, 1);
         foreach ($iterator as $result) {
             return $result;
         }

@@ -40,17 +40,14 @@ foreach ($events as $event) {
         $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
 
         if ($in_progress) {
-            // todo: LINEテキストを元に、nodeのブランチに対応するものを探す
-            // todo: 新しいNodeブランチを元に返事をする
-
-            /** @var \Amida\NodeInterface $node */
-            $node = $bag->getNodes()->first();
+            /** @var \Amida\NodeInterface $latestNode */
+            $latestNode = $bag->getNodes()->last();
 
             $trigger = \Amida\TriggerText::text($line_text);
 
             $newNode = null;
 
-            foreach ($node->getBranches() as $branch) {
+            foreach ($latestNode->getBranches() as $branch) {
                 foreach ($branch->getTriggers() as $branch_trigger) {
                     if ($trigger->equalTo($branch_trigger)) {
                         $newNode = $configure->getNodes()->firstMatch([
@@ -62,6 +59,8 @@ foreach ($events as $event) {
             }
 
             if ($newNode !== null) {
+                error_log(var_export($newNode->getId(), true));
+
                 $messageBuilder = getLINEMessageBuilderByAmidaNode($newNode);
                 if ($messageBuilder !== null) {
                     $response = $bot->replyMessage(
