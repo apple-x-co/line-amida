@@ -4,7 +4,7 @@
 namespace Amida;
 
 
-class Persistence
+class PersistenceFile implements PersistenceInterface
 {
     private $file_path;
 

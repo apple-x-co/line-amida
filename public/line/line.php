@@ -26,7 +26,9 @@ foreach ($events as $event) {
         $bag = new \Amida\Bag();
         $in_progress = false;
 
-        $persistence = new \Amida\Persistence(__DIR__ . '/../../data/cache/' . $line_id);
+        $persistence = new \Amida\PersistenceProvider(
+            new \Amida\PersistenceFile(__DIR__ . '/../../data/cache/' . $line_id)
+        );
         if ($persistence->exists()) {
             /** @var \Amida\Bag $bag */
             $bag = $persistence->fetch(\Amida\Bag::class);
