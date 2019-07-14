@@ -4,4 +4,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
 
-var_dump($configure);
+$rootNode = $configure->getNodes()->firstMatch(['root' => 1]);
+
+var_dump($rootNode->getContent());

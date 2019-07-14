@@ -3,6 +3,7 @@
 return [
     [
         'id'       => 'node-a',
+        'root'     => 1,
         //'class' => '\Amida\Node',
         'content'  => [
             //'class' => '\Amida\ContentText',

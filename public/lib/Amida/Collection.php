@@ -28,13 +28,64 @@ class Collection
         return $this->array;
     }
 
+    /**
+     * @return bool
+     */
     public function isEmpty()
     {
         return empty($this->array);
     }
 
+    /**
+     * @param mixed $data
+     */
     public function append($data)
     {
         $this->array[] = $data;
+    }
+
+    /**
+     * @param array $conditions
+     *
+     * @return mixed|null
+     */
+    public function firstMatch($conditions)
+    {
+        $matchers = [];
+        foreach ($conditions as $property => $property_value) {
+            $matchers[] = function ($value) use ($property, $property_value) {
+                if ((is_array($value) || $value instanceof \ArrayAccess) &&
+                    $value[$property] === $property_value) {
+                    return true;
+                }
+
+                if (is_object($value) &&
+                    property_exists($value, $property) &&
+                    $value->$property === $property_value) {
+                    return true;
+                }
+
+                return false;
+            };
+        }
+
+        foreach ($this->array as $item) {
+            foreach ($matchers as $matcher) {
+                if ( ! $matcher($item)) {
+                    continue 2;
+                }
+            }
+            return $item;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->array;
     }
 }

@@ -17,4 +17,12 @@ class Configure
     {
         $this->nodes = $nodes;
     }
+
+    /**
+     * @return Collection|NodeInterface[]
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
 }
