@@ -6,4 +6,10 @@ $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
 
 $rootNode = $configure->getNodes()->firstMatch(['root' => 1]);
 
-var_dump($rootNode->getContent());
+$bag = new \Amida\Bag();
+$bag->addNode($rootNode);
+
+$persistence = new \Amida\Persistence(__DIR__ . '/t.dat');
+//$serializer->save($bag);
+$aBag = $persistence->fetch(\Amida\Bag::class);
+var_dump(get_class($aBag));

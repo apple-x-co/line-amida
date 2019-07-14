@@ -18,14 +18,28 @@ foreach ($events as $event) {
 //        $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('HELLO')
 //    );
 
+    $line_id = $event->getEventSourceId();
+
     if ($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage) {
 
-        $in_progress = false; // todo: 状態から判定する
+        $line_text = $event->getText();
+        $bag = new \Amida\Bag();
+        $in_progress = false;
 
-        if ( ! $in_progress) {
+        $persistence = new \Amida\Persistence(__DIR__ . '/../../data/cache/' . $line_id);
+        if ($persistence->exists()) {
+            $bag = $persistence->fetch(\Amida\Bag::class);
+            if ($bag !== null) {
+                $in_progress = true;
+            }
+        }
 
-            if ($event->getText() === 'amida') {
-                $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
+        $configure = \Amida\ConfigureLoader::load(__DIR__ . '/../config/amida.php');
+
+        if ($in_progress) {
+            // todo:
+        } else {
+            if ($line_text === 'amida') {
                 /** @var \Amida\NodeInterface $rootNode */
                 $rootNode = $configure->getNodes()->firstMatch(['root' => 1]);
 
@@ -58,9 +72,12 @@ foreach ($events as $event) {
                         error_log($response->getRawBody());
                     }
                 }
+
+                $bag->addNode($rootNode);
             }
 
         }
 
+        $persistence->save($bag);
     }
 }
