@@ -46,7 +46,35 @@ foreach ($events as $event) {
             /** @var \Amida\NodeInterface $node */
             $node = $bag->getNodes()->first();
 
+            $trigger = \Amida\TriggerText::text($line_text);
 
+            $newNode = null;
+
+            foreach ($node->getBranches() as $branch) {
+                foreach ($branch->getTriggers() as $branch_trigger) {
+                    if ($trigger->equalTo($branch_trigger)) {
+                        $newNode = $configure->getNodes()->firstMatch([
+                            'id' => $branch->getTo()
+                        ]);
+                        break;
+                    }
+                }
+            }
+
+            if ($newNode !== null) {
+                $messageBuilder = getLINEMessageBuilderByAmidaNode($newNode);
+                if ($messageBuilder !== null) {
+                    $response = $bot->replyMessage(
+                        $event->getReplyToken(), $messageBuilder
+                    );
+                    if ( ! $response->isSucceeded()) {
+                        error_log($response->getRawBody());
+                    }
+                }
+
+                $bag->addNode($newNode);
+                $persistence->save($bag);
+            }
         }
 
         if ($line_text === 'amida') {

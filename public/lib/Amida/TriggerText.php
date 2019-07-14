@@ -20,6 +20,29 @@ class TriggerText implements TriggerInterface
     }
 
     /**
+     * @param TriggerInterface $trigger
+     *
+     * @return boolean
+     */
+    public function equalTo($trigger)
+    {
+        return ($trigger instanceof static) && $this->getText() === $trigger->getText();
+    }
+
+    /**
+     * @param $text
+     *
+     * @return $this
+     */
+    public static function text($text)
+    {
+        return new static([
+            'type' => 'text',
+            'text' => $text
+        ]);
+    }
+
+    /**
      * @return string
      */
     public function getText()

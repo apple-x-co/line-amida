@@ -25,6 +25,14 @@ class BranchText implements BranchInterface, \ArrayAccess
     /**
      * @return string
      */
+    public function getTo()
+    {
+        return $this->data['to'];
+    }
+
+    /**
+     * @return string
+     */
     public function getLabel()
     {
         return $this->data['label'];
