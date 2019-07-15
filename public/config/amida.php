@@ -2,136 +2,275 @@
 
 return [
     [
-        'id'       => 'node-a',
+        'id'       => 'node-question',
         'root'     => 1,
-        //'class' => '\Amida\Node',
         'content'  => [
-            //'class' => '\Amida\ContentText',
             'type' => 'text',
-            'text' => 'aaa',
+            'text' => 'お料理のジャンルを教えてください',
         ],
         'branches' => [
             [
-                //'class' => '\Amida\Branch',
-                'to'       => 'node-b1',
+                'to'       => 'node-japanese',
                 'type'     => 'text',
-                'label'    => 'branch b1',
-                'text'     => 'b1',
+                'label'    => '和食（日本食）',
+                'text'     => '和食',
                 'triggers' => [
                     [
-                        //'class' => '\Amida\TriggerText',
                         'type' => 'text',
-                        'text' => 'b1'
+                        'text' => '和食'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => '日本食'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => '日本料理'
                     ]
                 ]
             ],
             [
-                'to'       => 'node-b2',
+                'to'       => 'node-chinese',
                 'type'     => 'text',
-                'label'    => 'branch b2',
-                'text'     => 'b2',
+                'label'    => '中華料理',
+                'text'     => '中華料理',
                 'triggers' => [
                     [
-                        //'class' => '\Amida\ContentText',
                         'type' => 'text',
-                        'text' => 'b2'
+                        'text' => '中華料理'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => '中華'
+                    ]
+                ]
+            ],
+            [
+                'to'       => 'node-thai',
+                'type'     => 'text',
+                'label'    => 'タイ料理',
+                'text'     => 'タイ料理',
+                'triggers' => [
+                    [
+                        'type' => 'text',
+                        'text' => 'タイ料理'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => 'タイ'
                     ]
                 ]
             ]
         ]
     ],
     [
-        'id'       => 'node-b1',
+        'id'       => 'node-japanese',
         'content'  => [
             'type' => 'text',
-            'text' => 'bbb1'
+            'text' => '和食の内容を教えてください！'
         ],
         'branches' => [
             [
-                'to'       => 'node-c1',
+                'to'       => 'node-japanese-vegetable',
                 'type'     => 'text',
-                'label'    => 'branch c1',
-                'text'     => 'c1',
+                'label'    => '野菜料理（山菜）',
+                'text'     => '野菜料理',
                 'triggers' => [
                     [
                         'type' => 'text',
-                        'text' => 'c1'
+                        'text' => '野菜料理'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => '山菜料理'
                     ]
                 ]
             ],
             [
-                'to'       => 'node-c2',
+                'to'       => 'node-japanese-seafood',
                 'type'     => 'text',
-                'label'    => 'branch c2',
-                'text'     => 'c2',
+                'label'    => '魚介料理',
+                'text'     => '魚介料理',
                 'triggers' => [
                     [
                         'type' => 'text',
-                        'text' => 'c2'
+                        'text' => '魚介料理'
+                    ]
+                ]
+            ],
+            [
+                'to'       => 'node-japanese-meat',
+                'type'     => 'text',
+                'label'    => '肉料理',
+                'text'     => '肉料理',
+                'triggers' => [
+                    [
+                        'type' => 'text',
+                        'text' => '肉料理'
                     ]
                 ]
             ]
         ]
     ],
     [
-        'id'       => 'node-b2',
+        'id'       => 'node-chinese',
         'content'  => [
             'type' => 'text',
-            'text' => 'bbb2'
+            'text' => '中華料理の内容を教えてください！'
         ],
         'branches' => [
             [
-                'to'       => 'node-c3',
+                'to'       => 'node-chinese-vegetable',
                 'type'     => 'text',
-                'label'    => 'branch c3',
-                'text'     => 'c3',
+                'label'    => '野菜料理（山菜）',
+                'text'     => '野菜料理',
                 'triggers' => [
                     [
                         'type' => 'text',
-                        'text' => 'c3'
+                        'text' => '野菜料理'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => '山菜料理'
                     ]
                 ]
             ],
             [
-                'to'       => 'node-c4',
+                'to'       => 'node-chinese-seafood',
                 'type'     => 'text',
-                'label'    => 'branch c4',
-                'text'     => 'c4',
+                'label'    => '魚介料理',
+                'text'     => '魚介料理',
                 'triggers' => [
                     [
                         'type' => 'text',
-                        'text' => 'c4'
+                        'text' => '魚介料理'
+                    ]
+                ]
+            ],
+            [
+                'to'       => 'node-chinese-meat',
+                'type'     => 'text',
+                'label'    => '肉料理',
+                'text'     => '肉料理',
+                'triggers' => [
+                    [
+                        'type' => 'text',
+                        'text' => '肉料理'
                     ]
                 ]
             ]
         ]
     ],
     [
-        'id'      => 'node-c1',
-        'content' => [
+        'id'       => 'node-thai',
+        'content'  => [
             'type' => 'text',
-            'text' => 'ccc1'
+            'text' => 'タイ料理の内容を教えてください！'
+        ],
+        'branches' => [
+            [
+                'to'       => 'node-thai-vegetable',
+                'type'     => 'text',
+                'label'    => '野菜料理（山菜）',
+                'text'     => '野菜料理',
+                'triggers' => [
+                    [
+                        'type' => 'text',
+                        'text' => '野菜料理'
+                    ],
+                    [
+                        'type' => 'text',
+                        'text' => '山菜料理'
+                    ]
+                ]
+            ],
+            [
+                'to'       => 'node-thai-seafood',
+                'type'     => 'text',
+                'label'    => '魚介料理',
+                'text'     => '魚介料理',
+                'triggers' => [
+                    [
+                        'type' => 'text',
+                        'text' => '魚介料理'
+                    ]
+                ]
+            ],
+            [
+                'to'       => 'node-thai-meat',
+                'type'     => 'text',
+                'label'    => '肉料理',
+                'text'     => '肉料理',
+                'triggers' => [
+                    [
+                        'type' => 'text',
+                        'text' => '肉料理'
+                    ]
+                ]
+            ]
         ]
     ],
     [
-        'id'      => 'node-c2',
+        'id'      => 'node-japanese-vegetable',
         'content' => [
             'type' => 'text',
-            'text' => 'ccc2'
+            'text' => "和食の野菜料理ですね。\nhttps://retty.me/"
         ]
     ],
     [
-        'id'      => 'node-c3',
+        'id'      => 'node-japanese-seafood',
         'content' => [
             'type' => 'text',
-            'text' => 'ccc3'
+            'text' => "和食の魚介料理ですね。\nhttps://retty.me/"
         ]
     ],
     [
-        'id'      => 'node-c4',
+        'id'      => 'node-japanese-meat',
         'content' => [
             'type' => 'text',
-            'text' => 'ccc4'
+            'text' => "和食の肉料理ですね。\nhttps://retty.me/"
+        ]
+    ],
+    [
+        'id'      => 'node-chinese-vegetable',
+        'content' => [
+            'type' => 'text',
+            'text' => "中華料理の野菜料理ですね。\nhttps://retty.me/"
+        ]
+    ],
+    [
+        'id'      => 'node-chinese-seafood',
+        'content' => [
+            'type' => 'text',
+            'text' => "中華料理の魚介料理ですね。\nhttps://retty.me/"
+        ]
+    ],
+    [
+        'id'      => 'node-chinese-meat',
+        'content' => [
+            'type' => 'text',
+            'text' => "中華料理の肉料理ですね。\nhttps://retty.me/"
+        ]
+    ],
+    [
+        'id'      => 'node-thai-vegetable',
+        'content' => [
+            'type' => 'text',
+            'text' => "タイ料理の野菜料理ですね。\nhttps://retty.me/"
+        ]
+    ],
+    [
+        'id'      => 'node-thai-seafood',
+        'content' => [
+            'type' => 'text',
+            'text' => "タイ料理の魚介料理ですね。\nhttps://retty.me/"
+        ]
+    ],
+    [
+        'id'      => 'node-thai-meat',
+        'content' => [
+            'type' => 'text',
+            'text' => "タイ料理の肉料理ですね。\nhttps://retty.me/"
         ]
     ]
 ];

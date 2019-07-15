@@ -123,7 +123,7 @@ foreach ($events as $event) {
                 }
             }
 
-            $ten_minutes_after_time = time(); //time() + (60 * 10);
+            $ten_minutes_after_time = time() + (60 * 10);
             $bag->setExpiration($ten_minutes_after_time);
             $bag->addNode($rootNode);
             $persistence->save($bag);
