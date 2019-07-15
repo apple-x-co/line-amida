@@ -9,9 +9,22 @@ class Bag implements \Serializable
     /** @var Collection */
     private $nodes;
 
+    /** @var int */
+    private $expiration;
+
     public function __construct()
     {
         $this->nodes = new Collection();
+        $this->expiration = null;
+    }
+
+    /**
+     *
+     */
+    public function clear()
+    {
+        $this->clearNodes();
+        $this->setExpiration(null);
     }
 
     /**
@@ -47,6 +60,30 @@ class Bag implements \Serializable
     }
 
     /**
+     * @param int $expiration
+     */
+    public function setExpiration($expiration)
+    {
+        $this->expiration = $expiration;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpiration()
+    {
+        return $this->expiration;
+    }
+
+    /**
+     *
+     */
+    public function isExpires()
+    {
+        return $this->expiration !== null && $this->expiration < time();
+    }
+
+    /**
      * String representation of object
      * @link https://php.net/manual/en/serializable.serialize.php
      * @return string the string representation of the object or null
@@ -54,7 +91,10 @@ class Bag implements \Serializable
      */
     public function serialize()
     {
-        return serialize($this->nodes);
+        return serialize([
+            'nodes'      => $this->nodes,
+            'expiration' => $this->expiration
+        ]);
     }
 
     /**
@@ -70,6 +110,12 @@ class Bag implements \Serializable
      */
     public function unserialize($serialized)
     {
-        $this->nodes = unserialize($serialized);
+        $unserialized = unserialize($serialized);
+        if (is_array($unserialized) && isset($unserialized['nodes'])) {
+            $this->nodes = $unserialized['nodes'];
+        }
+        if (is_array($unserialized) && isset($unserialized['nodes'])) {
+            $this->expiration = $unserialized['expiration'];
+        }
     }
 }

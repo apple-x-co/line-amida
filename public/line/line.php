@@ -12,8 +12,6 @@ $signature = $_SERVER["HTTP_" . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATUR
 
 $events = $bot->parseEventRequest(file_get_contents('php://input'), $signature);
 
-// todo: セッションの有効期限
-
 /** @var \LINE\LINEBot\Event\BaseEvent $event */
 foreach ($events as $event) {
 //    $response = $bot->replyMessage(
@@ -34,6 +32,20 @@ foreach ($events as $event) {
         if ($persistence->exists()) {
             /** @var \Amida\Bag $bag */
             $bag = $persistence->fetch(\Amida\Bag::class);
+            if ($bag !== null && $bag->isExpires()) {
+                $bag->clear();
+                $persistence->save($bag);
+
+                $messageBuilder = getLINEMessageBuilderByText('はじめからやり直してください');
+                if ($messageBuilder !== null) {
+                    $response = $bot->replyMessage(
+                        $event->getReplyToken(), $messageBuilder
+                    );
+                    if ( ! $response->isSucceeded()) {
+                        error_log($response->getRawBody());
+                    }
+                }
+            }
             if ($bag !== null && $bag->hasNodes()) {
                 $in_progress = true;
             }
@@ -111,6 +123,8 @@ foreach ($events as $event) {
                 }
             }
 
+            $ten_minutes_after_time = time(); //time() + (60 * 10);
+            $bag->setExpiration($ten_minutes_after_time);
             $bag->addNode($rootNode);
             $persistence->save($bag);
         }
@@ -118,9 +132,19 @@ foreach ($events as $event) {
 }
 
 /**
+ * @param string $text
+ *
+ * @return \LINE\LINEBot\MessageBuilder
+ */
+function getLINEMessageBuilderByText($text)
+{
+    return new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
+}
+
+/**
  * @param \Amida\NodeInterface $node
  *
- * @return LINE\LINEBot\MessageBuilder|null
+ * @return \LINE\LINEBot\MessageBuilder|null
  */
 function getLINEMessageBuilderByAmidaNode($node)
 {
