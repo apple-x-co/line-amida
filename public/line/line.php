@@ -12,6 +12,8 @@ $signature = $_SERVER["HTTP_" . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATUR
 
 $events = $bot->parseEventRequest(file_get_contents('php://input'), $signature);
 
+// todo: セッションの有効期限
+
 /** @var \LINE\LINEBot\Event\BaseEvent $event */
 foreach ($events as $event) {
 //    $response = $bot->replyMessage(
@@ -45,6 +47,7 @@ foreach ($events as $event) {
 
             $trigger = \Amida\TriggerText::text($line_text);
 
+            /** @var \Amida\NodeInterface $newNode */
             $newNode = null;
 
             foreach ($latestNode->getBranches() as $branch) {
@@ -58,8 +61,8 @@ foreach ($events as $event) {
                 }
             }
 
-            if ($newNode !== null) {
-                $messageBuilder = getLINEMessageBuilderByAmidaNode($newNode);
+            if ($newNode === null) {
+                $messageBuilder = getLINEMessageBuilderByAmidaNode($latestNode);
                 if ($messageBuilder !== null) {
                     $response = $bot->replyMessage(
                         $event->getReplyToken(), $messageBuilder
@@ -68,8 +71,24 @@ foreach ($events as $event) {
                         error_log($response->getRawBody());
                     }
                 }
+                continue;
+            }
 
+            $messageBuilder = getLINEMessageBuilderByAmidaNode($newNode);
+            if ($messageBuilder !== null) {
+                $response = $bot->replyMessage(
+                    $event->getReplyToken(), $messageBuilder
+                );
+                if ( ! $response->isSucceeded()) {
+                    error_log($response->getRawBody());
+                }
+            }
+
+            if ($newNode->hasBranch()) {
                 $bag->addNode($newNode);
+                $persistence->save($bag);
+            } else {
+                $bag->clearNodes();
                 $persistence->save($bag);
             }
         }
