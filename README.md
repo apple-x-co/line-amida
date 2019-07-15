@@ -11,3 +11,7 @@
 ### LINE
 
 Webhook : `/public/line/line.php`
+
+## Notice
+
+- Only plain text is supported.
