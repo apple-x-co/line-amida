@@ -83,6 +83,26 @@ class Node implements NodeInterface, \ArrayAccess
         $this->content = $content;
     }
 
+    /**
+     * @return NodeCallbackInterface|null
+     */
+    public function getCallback()
+    {
+        $class = $this->data['callback'];
+        if ($class === null || $class === '') {
+            return null;
+        }
+        if ( ! class_exists($class)) {
+            return null;
+        }
+        $instance = new $class();
+        if ( ! ($instance instanceof NodeCallbackInterface)) {
+            return null;
+        }
+
+        return $instance;
+    }
+
     public function __debugInfo()
     {
         return [

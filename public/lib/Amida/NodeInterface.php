@@ -34,4 +34,9 @@ interface NodeInterface
      * @param ContentInterface $content
      */
     public function setContent($content);
+
+    /**
+     * @return NodeCallbackInterface|null
+     */
+    public function getCallback();
 }

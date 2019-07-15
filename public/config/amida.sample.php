@@ -38,7 +38,8 @@ return [
                     ]
                 ]
             ]
-        ]
+        ],
+        //'callback' => '\Amida\NodeCallbackInterface'
     ],
     [
         'id'       => 'node-b1',

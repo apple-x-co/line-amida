@@ -12,14 +12,8 @@ $signature = $_SERVER["HTTP_" . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATUR
 
 $events = $bot->parseEventRequest(file_get_contents('php://input'), $signature);
 
-// TODO: node.callback_class
-
 /** @var \LINE\LINEBot\Event\BaseEvent $event */
 foreach ($events as $event) {
-//    $response = $bot->replyMessage(
-//        $event->getReplyToken(), new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('HELLO')
-//    );
-
     $line_id = $event->getEventSourceId();
 
     if ($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage) {
@@ -88,6 +82,11 @@ foreach ($events as $event) {
                 continue;
             }
 
+            $callback = $newNode->getCallback();
+            if ($callback !== null) {
+                $callback->call($newNode, $bag);
+            }
+
             $messageBuilder = getLINEMessageBuilderByAmidaNode($newNode);
             if ($messageBuilder !== null) {
                 $response = $bot->replyMessage(
@@ -102,7 +101,7 @@ foreach ($events as $event) {
                 $bag->addNode($newNode);
                 $persistence->save($bag);
             } else {
-                $bag->clearNodes();
+                $bag->clear();
                 $persistence->save($bag);
             }
         }
