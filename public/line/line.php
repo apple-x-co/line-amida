@@ -12,6 +12,8 @@ $signature = $_SERVER["HTTP_" . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATUR
 
 $events = $bot->parseEventRequest(file_get_contents('php://input'), $signature);
 
+// TODO: node.callback_class
+
 /** @var \LINE\LINEBot\Event\BaseEvent $event */
 foreach ($events as $event) {
 //    $response = $bot->replyMessage(
